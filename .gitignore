@@ -1,0 +1,25 @@
+# 실행 결과·임시 산출물
+out/
+*.log
+logs/
+
+# 비밀정보·환경
+.env
+.env.*
+secrets/
+*.key
+*.pem
+
+# 파이썬 캐시
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS·에디터
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# 대용량 원본 데이터(필요 시 주석 해제)
+# data/raw/
