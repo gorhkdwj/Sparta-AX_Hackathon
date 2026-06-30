@@ -10,6 +10,29 @@
 
 ---
 
+### W-002 · git 저장소 초기화 및 원격 연결
+**요청**
+- `https://github.com/gorhkdwj/Sparta-AX_Hackerton.git` 에 git init + 푸시. 주제는 내일(해커톤 당일) 부여, 나머지 작업도 내일.
+
+**수행 작업**
+- `git init`, 기본 브랜치 `main`, origin 연결
+- 첫 커밋(`fd90a12`) 후 `git push -u origin main`
+
+**변경 파일**
+- 신규 추적 13개 파일 (운영 파일 + docs + skill-wip 골격). `out/`은 .gitignore로 제외됨.
+
+**검증**
+- `.claude/settings.json` 비밀정보 없음 확인(플러그인 목록만). push 성공: `main -> main` 새 브랜치 생성.
+
+**판단 근거**
+- 셋업 상태를 원격에 백업해 내일 해커톤 당일 바로 이어가기 위함.
+
+**결과**
+- 완료: 원격 저장소에 초기 셋업 반영
+- 남은 작업(내일): 주제 확정 → 기준계약 → SKILL.md → 시연 → 제출
+
+---
+
 ### W-001 · 프로젝트 운영 체계 셋업 (스킬 제출형)
 **요청**
 - /project-setup 으로 초기 운영 구조 셋업. 산출물은 Claude Skill(SKILL.md). 주제 미정이라 임시 이름으로 골격만.
