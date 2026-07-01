@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>키즐링 후속 이메일 — Standard</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif; background: #f4f5f7; color: #1a1a2e; line-height: 1.6; }
+.container { max-width: 1080px; margin: 0 auto; padding: 40px 24px; }
+
+.header { background: #fff; border-radius: 12px; padding: 32px 36px; margin-bottom: 24px; border-left: 5px solid #f4a261; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+.level-badge { display: inline-block; background: #e76f51; color: white; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-bottom: 14px; }
+.header h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.header-meta { font-size: 13px; color: #6c757d; display: flex; flex-wrap: wrap; gap: 16px; }
+.breadcrumb { font-size: 12px; color: #aaa; margin-bottom: 10px; }
+
+.section { background: #fff; border-radius: 12px; padding: 28px 32px; margin-bottom: 24px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+.section-title { font-size: 15px; font-weight: 700; padding-bottom: 14px; margin-bottom: 20px; border-bottom: 1px solid #eee; }
+
+/* Pipeline */
+.pipeline { display: flex; align-items: center; gap: 0; flex-wrap: wrap; margin-bottom: 20px; }
+.pipe-step { background: #f0f4ff; border: 2px solid #6c4cf0; border-radius: 8px; padding: 12px 16px; text-align: center; min-width: 116px; }
+.pipe-step .cmd { font-size: 13px; font-weight: 800; color: #6c4cf0; font-family: monospace; }
+.pipe-step .desc { font-size: 11px; color: #555; margin-top: 4px; }
+.pipe-arrow { font-size: 20px; color: #adb5bd; padding: 0 8px; }
+.pipe-step.input { background: #fff8e1; border-color: #f4a261; }
+.pipe-step.input .cmd { color: #e76f51; }
+.pipe-step.output { background: #e8f5e9; border-color: #11998e; }
+.pipe-step.output .cmd { color: #0c7a6e; }
+
+.usage-box { background: #1e1e2e; border-radius: 8px; padding: 16px 20px; font-family: monospace; font-size: 13px; color: #a6e3a1; margin-bottom: 16px; line-height: 1.8; }
+.usage-box .comment { color: #6c7086; }
+.usage-box .cmd { color: #89b4fa; }
+
+.design-note { background: #f8f9fa; border-left: 3px solid #f4a261; border-radius: 0 8px 8px 0; padding: 14px 18px; font-size: 13px; color: #444; }
+.design-note strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th { background: #f8f9fa; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #6c757d; padding: 10px 12px; text-align: left; border-bottom: 2px solid #e9ecef; }
+tbody td { padding: 10px 12px; border-bottom: 1px solid #f0f2f5; vertical-align: top; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 5px; white-space: nowrap; }
+.b-원장 { background: #ece7ff; color: #5b34d6; }
+.b-팀장 { background: #e2efff; color: #1f6fd6; }
+.b-사업개발 { background: #e2f5f1; color: #0c7a6e; }
+
+/* persona cards */
+.persona-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 8px; }
+.persona { border-radius: 10px; padding: 18px; border-top: 4px solid; background: #fafbfc; }
+.p-원장 { border-color: #6c4cf0; }
+.p-팀장 { border-color: #2f80ed; }
+.p-사업개발 { border-color: #11998e; }
+.persona h4 { font-size: 14px; font-weight: 800; margin-bottom: 8px; }
+.persona .row { font-size: 12px; margin-bottom: 6px; }
+.persona .row b { color: #555; font-size: 11px; text-transform: uppercase; letter-spacing: .3px; display: block; }
+.cta-chip { display: inline-block; background: #1a1a2e; color: #fff; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; margin-top: 4px; }
+
+/* CTA intensity */
+.urg-high { background: #ffe0e3; color: #c9323e; }
+.urg-mid { background: #fff3cd; color: #856404; }
+.urg-low { background: #eef0f2; color: #556; }
+
+@media(max-width:760px) {
+  .pipeline { flex-direction: column; }
+  .persona-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <div class="breadcrumb">Basic 포함 ›</div>
+  <div class="level-badge">🟡 Standard — 130점</div>
+  <h1>키즐링 후속 이메일 초안 + 재현 파이프라인</h1>
+  <div class="header-meta">
+    <span>📅 에듀플러스위크 2026</span>
+    <span>📊 50건 (중복 제거 49건)</span>
+    <span>🔁 새 박람회 CSV에 재사용 가능</span>
+    <span>✍️ [이름] · 2026-07-01</span>
+  </div>
+</div>
+
+<!-- Pipeline -->
+<div class="section">
+  <div class="section-title">⚙️ 파이프라인 구성 — 새 리드 CSV 넣으면 자동 재현</div>
+  <div class="pipeline">
+    <div class="pipe-step input"><div class="cmd">새 leads.csv</div><div class="desc">data/ 폴더에 교체</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step"><div class="cmd">/analyze</div><div class="desc">분포·결측·중복 점검</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step"><div class="cmd">/insight</div><div class="desc">직책 소구점 매핑</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step"><div class="cmd">/generate</div><div class="desc">초안+review_flag 생성</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step"><div class="cmd">/review</div><div class="desc">품질 자가 점검</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step output"><div class="cmd">email_drafts.csv</div><div class="desc">사람 검토 후 발송</div></div>
+  </div>
+
+  <div class="usage-box">
+    <span class="comment"># 매 박람회 사용법 (Claude Code 터미널)</span><br>
+    <span class="comment"># 1. 새 리드 CSV를 data/leads_sample.csv로 교체</span><br>
+    <span class="cmd">/analyze</span> <span class="comment">  # 직책 분포·이메일/메모 결측·중복 점검</span><br>
+    <span class="cmd">/insight</span> <span class="comment">  # 원장/팀장/사업개발 소구점 + review_flag 기준</span><br>
+    <span class="cmd">/generate</span> <span class="comment"> # lead_id·subject·body·review_flag 자동 생성</span><br>
+    <span class="cmd">/review</span> <span class="comment">   # 직책 차별화·4요소·CTA 자가 점검 후 사람 검토</span>
+  </div>
+
+  <div class="design-note">
+    <strong>후속 운영 설계 근거 (본인 설계)</strong>
+    발송은 사람이 최종 검토하므로, AI 초안은 "직책 분기 + 상담 내용 반영 + review_flag"까지만 책임진다.
+    상담 메모가 비었거나 모호한 리드는 자동 발송 대상에서 빼고 review_flag=Y로 사람에게 넘겨,
+    "기억 못 하는 회사" 인상을 주는 잘못된 자동 발송을 원천 차단했다. 골든타임(48h) 안에 '상' 우선순위부터 처리되도록 정렬한다.
+  </div>
+</div>
+
+<!-- 직책별 소구점 설계표 -->
+<div class="section">
+  <div class="section-title">🎯 직책별 소구점·CTA 설계 (본인 기획)</div>
+  <div class="persona-grid">
+    <div class="persona p-원장">
+      <h4><span class="badge b-원장">원장</span></h4>
+      <div class="row"><b>핵심 소구점</b>원생 재능발굴 · 학부모 만족 · 기관 브랜딩</div>
+      <div class="row"><b>제품 연결</b>대회운영SaaS / 콘텐츠안전필터 → "원생 효과"</div>
+      <div class="row"><b>톤</b>오너 공감 + 원생·학부모 효과 중심</div>
+      <div class="row"><span class="cta-chip">CTA · 무료 데모 신청</span></div>
+    </div>
+    <div class="persona p-팀장">
+      <h4><span class="badge b-팀장">팀장</span></h4>
+      <div class="row"><b>핵심 소구점</b>도입 난이도 ↓ · 운영 공수 절감 · 시스템 연동</div>
+      <div class="row"><b>제품 연결</b>"기존 워크플로에 쉽게 붙는 자동화"</div>
+      <div class="row"><b>톤</b>실무 중심 + 연동·공수 절감 수치</div>
+      <div class="row"><span class="cta-chip">CTA · 기술 도입 미팅</span></div>
+    </div>
+    <div class="persona p-사업개발">
+      <h4><span class="badge b-사업개발">사업개발</span></h4>
+      <div class="row"><b>핵심 소구점</b>파트너십 수익모델 · 공동 마케팅 · 기관 공급</div>
+      <div class="row"><b>제품 연결</b>"공동 공급으로 상호 수익 창출"</div>
+      <div class="row"><b>톤</b>전략적 비즈니스 + 수익 배분 중심</div>
+      <div class="row"><span class="cta-chip">CTA · 파트너십 제안서 송부</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 우선순위별 CTA 강도 -->
+<div class="section">
+  <div class="section-title">📐 우선순위(follow_up_priority)별 CTA 강도 — 직책 × 우선순위 매트릭스</div>
+  <table>
+    <thead><tr><th>우선순위</th><th>강도</th><th>원장</th><th>팀장</th><th>사업개발</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge urg-high">상</span></td>
+        <td>강함 (48h 내)</td>
+        <td>이번 주 무료 데모 신청</td>
+        <td>이번 주 기술 도입 미팅</td>
+        <td>제안서 + 이번 주 미팅</td>
+      </tr>
+      <tr>
+        <td><span class="badge urg-mid">중</span></td>
+        <td>보통 (72h 내)</td>
+        <td>데모 + 사례집 안내</td>
+        <td>도입 효과 자료 후 미팅 제안</td>
+        <td>파트너십 제안서 송부</td>
+      </tr>
+      <tr>
+        <td><span class="badge urg-low">하</span></td>
+        <td>약함 (장기 너처링)</td>
+        <td>소개 자료·사례집 발송</td>
+        <td>소개서·연동 가이드 발송</td>
+        <td>파트너십 소개서 발송</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:#888;margin-top:10px">* follow_up_priority는 입력값으로만 사용해 CTA 강도를 조절한다(직접 스코어링 금지). review_flag=Y 리드는 강도와 무관하게 사람 검토 후 발송.</p>
+</div>
+
+</div>
+</body>
+</html>

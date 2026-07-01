@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>키즐링 후속 이메일 — Challenge</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif; background: #f4f5f7; color: #1a1a2e; line-height: 1.6; }
+.container { max-width: 1080px; margin: 0 auto; padding: 40px 24px; }
+
+.header { background: #fff; border-radius: 12px; padding: 32px 36px; margin-bottom: 24px; border-left: 5px solid #e63946; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+.level-badge { display: inline-block; background: #e63946; color: white; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-bottom: 14px; }
+.header h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.header-meta { font-size: 13px; color: #6c757d; display: flex; flex-wrap: wrap; gap: 16px; }
+.breadcrumb { font-size: 12px; color: #aaa; margin-bottom: 10px; }
+
+.section { background: #fff; border-radius: 12px; padding: 28px 32px; margin-bottom: 24px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+.section-title { font-size: 15px; font-weight: 700; padding-bottom: 14px; margin-bottom: 20px; border-bottom: 1px solid #eee; }
+
+/* Priority framework */
+.priority-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+.priority-item { background: #f8f9fa; border-radius: 8px; padding: 16px; border-top: 3px solid; }
+.priority-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.priority-desc { font-size: 12px; color: #555; }
+.priority-weight { font-size: 20px; font-weight: 800; }
+.pw-blue { border-color: #2f80ed; color: #2f80ed; }
+.pw-orange { border-color: #e76f51; color: #e76f51; }
+.pw-green { border-color: #11998e; color: #11998e; }
+
+/* Proposal cards */
+.proposal { border-radius: 12px; border: 1px solid #e9ecef; margin-bottom: 20px; overflow: hidden; }
+.proposal-header { padding: 20px 24px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.proposal-meta { flex: 1; }
+.proposal-num { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 6px; }
+.proposal-title { font-size: 16px; font-weight: 800; margin-bottom: 6px; }
+.proposal-sub { font-size: 13px; color: #666; }
+.priority-badge { display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 10px; padding: 10px 18px; min-width: 80px; text-align: center; }
+.priority-badge .pb-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 2px; }
+.priority-badge .pb-score { font-size: 22px; font-weight: 900; }
+.pb-p0 { background: #ffe0e3; color: #c9323e; }
+.pb-p1 { background: #fff3cd; color: #856404; }
+
+.proposal-body { padding: 0 24px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.prop-section { background: #f8f9fa; border-radius: 8px; padding: 16px; }
+.prop-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 8px; }
+.prop-section-body { font-size: 13px; color: #333; line-height: 1.6; }
+
+.lead-evidence { margin-top: 8px; }
+.lead-item { background: white; border-left: 3px solid #6c4cf0; border-radius: 0 6px 6px 0; padding: 8px 12px; margin-bottom: 6px; font-size: 12px; }
+.lead-item .lid { font-weight: 700; color: #6c4cf0; margin-right: 6px; }
+
+/* sequence */
+.seq { display: flex; gap: 0; align-items: stretch; flex-wrap: wrap; }
+.seq-step { flex: 1; min-width: 110px; background: #fff; border: 1.5px solid #e9ecef; border-radius: 8px; padding: 10px 12px; }
+.seq-day { font-size: 11px; font-weight: 800; color: #6c4cf0; }
+.seq-act { font-size: 12px; color: #444; margin-top: 3px; }
+.seq-arrow { display: flex; align-items: center; color: #adb5bd; font-size: 18px; padding: 0 6px; }
+
+.score-breakdown { display: flex; flex-direction: column; gap: 6px; }
+.score-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+.score-bar-track { background: #e9ecef; border-radius: 3px; height: 8px; flex: 1; margin: 0 10px; }
+.score-bar-fill { height: 100%; border-radius: 3px; background: #6c4cf0; }
+.score-val { font-weight: 700; font-size: 13px; color: #333; min-width: 30px; text-align: right; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th { background: #f8f9fa; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #6c757d; padding: 10px 12px; text-align: left; border-bottom: 2px solid #e9ecef; }
+tbody td { padding: 10px 12px; border-bottom: 1px solid #f0f2f5; vertical-align: top; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 5px; }
+.b-p0 { background: #ffe0e3; color: #c9323e; }
+.b-p1 { background: #fff3cd; color: #856404; }
+
+@media(max-width:760px) {
+  .priority-grid { grid-template-columns: 1fr; }
+  .proposal-body { grid-template-columns: 1fr; }
+  .seq { flex-direction: column; }
+  .seq-arrow { transform: rotate(90deg); }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <div class="breadcrumb">Basic + Standard 포함 ›</div>
+  <div class="level-badge">🔴 Challenge — 160점</div>
+  <h1>키즐링 후속 이메일 + 리드 기반 후속 캠페인 기획안</h1>
+  <div class="header-meta">
+    <span>📅 에듀플러스위크 2026</span>
+    <span>📊 49건 분석 (중복 제거)</span>
+    <span>📋 캠페인 기획 2건 (P0·P1)</span>
+    <span>✍️ [이름] · 2026-07-01</span>
+  </div>
+</div>
+
+<!-- Priority framework -->
+<div class="section">
+  <div class="section-title">⚖️ 세그먼트 우선순위 판단 기준 (본인 설계)</div>
+  <div class="priority-grid">
+    <div class="priority-item pw-blue">
+      <div class="priority-weight pw-blue">40%</div>
+      <div class="priority-name">세그먼트 규모 × 의향</div>
+      <div class="priority-desc">해당 세그먼트 리드 수 × 상(高) 우선순위 비중. 클수록 후속 ROI가 높다.</div>
+    </div>
+    <div class="priority-item pw-orange">
+      <div class="priority-weight pw-orange">40%</div>
+      <div class="priority-name">계약 임팩트</div>
+      <div class="priority-desc">기관 공급·파트너십 등 거래 규모. 단가·반복성이 큰 세그먼트 우대.</div>
+    </div>
+    <div class="priority-item pw-green">
+      <div class="priority-weight pw-green">20%</div>
+      <div class="priority-name">골든타임 민감도</div>
+      <div class="priority-desc">48시간 안에 식기 쉬운가. 데모·미팅 의향이 즉시성 높은 세그먼트 우대.</div>
+    </div>
+  </div>
+  <p style="font-size:13px;color:#666">후속을 1통씩 보내는 것을 넘어, 리드를 세그먼트로 묶어 "어떤 묶음에 어떤 시퀀스를 먼저 돌릴지"를 정하면 담당자 1인의 시간을 임팩트 큰 곳에 집중할 수 있다.</p>
+</div>
+
+<!-- Proposal 1 -->
+<div class="proposal">
+  <div class="proposal-header" style="background:#fff8f8;border-bottom:1px solid #eee">
+    <div class="proposal-meta">
+      <div class="proposal-num">캠페인 01</div>
+      <div class="proposal-title">에듀테크 팀장 — 키즐콘 연동·도입 데모 트랙</div>
+      <div class="proposal-sub">"도입이 쉬운가 / 공수가 주는가"를 묻는 팀장 세그먼트를 기술 도입 미팅으로 전환</div>
+    </div>
+    <div class="priority-badge pb-p0">
+      <div class="pb-label">Priority</div>
+      <div class="pb-score">P0</div>
+    </div>
+  </div>
+  <div class="proposal-body">
+    <div>
+      <div class="prop-section">
+        <div class="prop-section-title">세그먼트 정의</div>
+        <div class="prop-section-body">org_type=에듀테크기업 & title=팀장 & 우선순위 상 (대회운영SaaS·콘텐츠안전필터 관심). 18명 중 '상' 다수로 가장 큰 즉시 전환 풀. 연동·공수 절감 수치에 민감.</div>
+      </div>
+      <div class="prop-section" style="margin-top:12px">
+        <div class="prop-section-title">후속 시퀀스</div>
+        <div class="seq">
+          <div class="seq-step"><div class="seq-day">Day 0</div><div class="seq-act">연동 중심 개인화 초안 발송</div></div>
+          <div class="seq-arrow">→</div>
+          <div class="seq-step"><div class="seq-day">Day 2</div><div class="seq-act">미응답 시 도입 효과 수치 자료</div></div>
+          <div class="seq-arrow">→</div>
+          <div class="seq-step"><div class="seq-day">Day 5</div><div class="seq-act">기술 도입 미팅 제안</div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="prop-section">
+        <div class="prop-section-title">근거 리드 (대표 3건)</div>
+        <div class="lead-evidence">
+          <div class="lead-item"><span class="lid">L022</span>한승우/클래스노트 | "자사 SaaS와 키즐콘 연동 난이도가 궁금. 개발 공수 최소화 중요"</div>
+          <div class="lead-item"><span class="lid">L026</span>윤태경/스마트클래스 | "LMS와 API 연동되면 도입 긍정적"</div>
+          <div class="lead-item"><span class="lid">L035</span>김태현/런잇 | "연동 공수와 도입 기간이 핵심"</div>
+        </div>
+      </div>
+      <div class="prop-section" style="margin-top:12px">
+        <div class="prop-section-title">우선순위 계산</div>
+        <div class="score-breakdown">
+          <div class="score-row"><span>규모×의향 (40%)</span><div class="score-bar-track"><div class="score-bar-fill" style="width:100%"></div></div><span class="score-val">40/40</span></div>
+          <div class="score-row"><span>계약 임팩트 (40%)</span><div class="score-bar-track"><div class="score-bar-fill" style="width:75%"></div></div><span class="score-val">30/40</span></div>
+          <div class="score-row"><span>골든타임 (20%)</span><div class="score-bar-track"><div class="score-bar-fill" style="width:100%"></div></div><span class="score-val">20/20</span></div>
+          <div class="score-row" style="font-weight:700;font-size:14px;margin-top:4px"><span>총점</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%;background:#e63946"></div></div><span class="score-val" style="color:#e63946">90점</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Proposal 2 -->
+<div class="proposal">
+  <div class="proposal-header" style="background:#fffdf0;border-bottom:1px solid #eee">
+    <div class="proposal-meta">
+      <div class="proposal-num">캠페인 02</div>
+      <div class="proposal-title">파트너십 BD — 기관 공급·공동 마케팅 제안서 트랙</div>
+      <div class="proposal-sub">수익 모델을 묻는 사업개발 세그먼트를 제안서 송부·미팅으로 전환</div>
+    </div>
+    <div class="priority-badge pb-p1">
+      <div class="pb-label">Priority</div>
+      <div class="pb-score">P1</div>
+    </div>
+  </div>
+  <div class="proposal-body">
+    <div>
+      <div class="prop-section">
+        <div class="prop-section-title">세그먼트 정의</div>
+        <div class="prop-section-body">title=사업개발 & interest_feature=파트너십 (12명). 채널 공급·공동 마케팅·기관 공급 계약 의향. 단건 단가는 크지만 협상 사이클이 길어 골든타임 민감도는 상대적으로 낮음.</div>
+      </div>
+      <div class="prop-section" style="margin-top:12px">
+        <div class="prop-section-title">후속 시퀀스</div>
+        <div class="seq">
+          <div class="seq-step"><div class="seq-day">Day 0</div><div class="seq-act">파트너십 인사 + 제안서 송부 예고</div></div>
+          <div class="seq-arrow">→</div>
+          <div class="seq-step"><div class="seq-day">Day 3</div><div class="seq-act">수익 배분 모델 제안서 전달</div></div>
+          <div class="seq-arrow">→</div>
+          <div class="seq-step"><div class="seq-day">Day 7</div><div class="seq-act">사업개발 미팅 일정 협의</div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="prop-section">
+        <div class="prop-section-title">근거 리드 (대표 4건)</div>
+        <div class="lead-evidence">
+          <div class="lead-item"><span class="lid">L039·L050</span>장민호/박람회사무국 | "참가 기관 공동 공급 파트너십, 수익 배분 논의" (중복 = 강한 관심 신호)</div>
+          <div class="lead-item"><span class="lid">L044</span>신동욱/러닝브릿지 | "회원사에 번들 제공, 수익 모델 구체화 요청"</div>
+          <div class="lead-item"><span class="lid">L049</span>김선우/러닝네트웍스 | "가맹 학원 채널 공급, 수익 배분·독점 여부 논의"</div>
+        </div>
+      </div>
+      <div class="prop-section" style="margin-top:12px">
+        <div class="prop-section-title">우선순위 계산</div>
+        <div class="score-breakdown">
+          <div class="score-row"><span>규모×의향 (40%)</span><div class="score-bar-track"><div class="score-bar-fill" style="width:75%"></div></div><span class="score-val">30/40</span></div>
+          <div class="score-row"><span>계약 임팩트 (40%)</span><div class="score-bar-track"><div class="score-bar-fill" style="width:100%"></div></div><span class="score-val">40/40</span></div>
+          <div class="score-row"><span>골든타임 (20%)</span><div class="score-bar-track"><div class="score-bar-fill" style="width:50%"></div></div><span class="score-val">10/20</span></div>
+          <div class="score-row" style="font-weight:700;font-size:14px;margin-top:4px"><span>총점</span><div class="score-bar-track"><div class="score-bar-fill" style="width:80%;background:#856404"></div></div><span class="score-val" style="color:#856404">80점</span></div>
+        </div>
+        <p style="font-size:11px;color:#888;margin-top:6px">* 계약 임팩트는 최고지만 협상 사이클이 길어 골든타임 점수가 낮아 P1</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Roadmap -->
+<div class="section">
+  <div class="section-title">🗺️ 후속 캠페인 로드맵 요약</div>
+  <table>
+    <thead><tr><th>우선순위</th><th>캠페인</th><th>핵심 근거 리드</th><th>시작</th><th>기대 효과</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge b-p0">P0</span></td>
+        <td><strong>에듀테크 팀장 연동·도입 데모 트랙</strong></td>
+        <td>L022·L026·L035 (연동·공수 절감)</td>
+        <td>박람회 +0~5일</td>
+        <td>'상' 팀장 리드의 기술 도입 미팅 전환율 극대화</td>
+      </tr>
+      <tr>
+        <td><span class="badge b-p1">P1</span></td>
+        <td><strong>파트너십 BD 제안서 트랙</strong></td>
+        <td>L039·L044·L049 (수익 모델·기관 공급)</td>
+        <td>박람회 +0~7일</td>
+        <td>채널/기관 공급 계약 파이프라인 확보</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:#888;margin-top:10px">* 원장 세그먼트(20명)는 무료 데모 신청 트랙으로 별도 운영. review_flag=Y 리드는 모든 트랙에서 사람 검토 후 합류.</p>
+</div>
+
+</div>
+</body>
+</html>

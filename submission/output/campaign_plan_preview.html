@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>키즐링 후속 캠페인 기획안 — 미리보기</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif; background: #f4f5f7; color: #1a1a2e; line-height: 1.6; }
+.container { max-width: 1040px; margin: 0 auto; padding: 40px 24px; }
+.header { background: #fff; border-radius: 12px; padding: 28px 32px; margin-bottom: 24px; border-left: 5px solid #e63946; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+.header h1 { font-size: 21px; font-weight: 700; margin-bottom: 8px; }
+.header p { font-size: 13px; color: #6c757d; }
+.summary-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+.summary-card { background: #fff; border-radius: 10px; padding: 18px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,.06); border-top: 4px solid #e63946; }
+.summary-n { font-size: 30px; font-weight: 800; }
+.summary-label { font-size: 12px; color: #666; margin-top: 4px; }
+.campaign { background: #fff; border-radius: 12px; padding: 28px 32px; margin-bottom: 24px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+.campaign-title { font-size: 17px; font-weight: 800; margin-bottom: 4px; }
+.campaign-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.tag { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; background: #f0e6ff; color: #6c4cf0; }
+.section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin: 16px 0 8px; }
+.lead-chip { display: inline-block; font-size: 12px; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px; padding: 3px 8px; margin: 2px 3px 2px 0; }
+.lead-chip.priority { border-color: #e63946; color: #c9323e; font-weight: 700; }
+.lead-chip.flag { border-color: #f0a020; color: #a06a00; font-weight: 700; }
+.quote { background: #fafbfc; border-left: 3px solid #6c4cf0; border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 13px; color: #444; margin-bottom: 6px; }
+.quote b { color: #6c4cf0; }
+.seq { display: flex; gap: 0; flex-wrap: wrap; margin-top: 6px; }
+.seq-step { flex: 1; min-width: 160px; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 12px 14px; margin: 4px; }
+.seq-day { font-size: 11px; font-weight: 800; color: #e63946; text-transform: uppercase; }
+.seq-act { font-size: 13px; color: #333; margin-top: 4px; }
+.priority-box { background: #fff8f0; border: 1px solid #f0d9b5; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #6b4a00; margin-top: 8px; }
+.review-note { background: #fff0f0; border: 1px solid #f3c9cd; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #c9323e; margin-top: 12px; }
+.footer-note { font-size: 12px; color: #999; text-align: center; margin-top: 8px; }
+
+/* 리드 상세 토글 */
+.lead-detail { display:inline-block; margin:2px 3px 2px 0; }
+.lead-detail summary { list-style:none; cursor:pointer; }
+.lead-detail summary::-webkit-details-marker { display:none; }
+.lead-detail summary.lead-chip::after { content:" \25b8"; font-size:10px; color:#999; }
+.lead-detail[open] summary.lead-chip::after { content:" \25be"; }
+.lead-email { background:#fafbfc; border:1px solid #e9ecef; border-radius:6px; padding:10px 12px; margin:4px 0 6px; font-size:12px; max-width:420px; }
+.lead-email .subj { font-weight:700; margin-bottom:4px; }
+.lead-email .body { color:#444; }
+
+/* 필터 탭 */
+.filter-bar { display:flex; gap:8px; margin:4px 0 10px; flex-wrap:wrap; }
+.filter-btn { font-size:12px; font-weight:600; padding:5px 12px; border-radius:14px; border:1px solid #ddd; background:#fff; color:#555; cursor:pointer; }
+.filter-btn.active { background:#6c4cf0; color:#fff; border-color:#6c4cf0; }
+.lead-detail[hidden] { display:none; }
+
+/* 우선순위 분포 바 */
+.priority-bar { display:flex; height:10px; border-radius:5px; overflow:hidden; margin:8px 0 4px; background:#eee; }
+.priority-bar .bar-high { background:#e63946; }
+.priority-bar .bar-mid { background:#f0a020; }
+.priority-bar .bar-low { background:#ccc; }
+.bar-legend { font-size:11px; color:#888; }
+
+/* 인쇄 */
+@media print {
+  body { background:#fff; }
+  .filter-bar { display:none; }
+  .lead-detail { display:block; }
+  .campaign { box-shadow:none; border:1px solid #ddd; page-break-inside:avoid; }
+}
+
+/* 캠페인 비교 요약 표 */
+.compare-table { width:100%; border-collapse:collapse; margin-bottom:24px; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,.06); }
+.compare-table th, .compare-table td { padding:10px 14px; border-bottom:1px solid #eee; text-align:left; font-size:13px; }
+.compare-table th { font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#888; background:#fafbfc; }
+
+/* 체크리스트형 후속 시퀀스 + 담당 라벨 */
+.seq-owner { display:inline-block; font-size:10px; font-weight:700; color:#6c4cf0; background:#f0e6ff; border-radius:4px; padding:1px 6px; margin-bottom:4px; }
+.seq-step label { display:flex; gap:6px; align-items:flex-start; cursor:pointer; }
+.seq-step input[type=checkbox] { margin-top:3px; }
+
+/* 리스크·차단요소 */
+.risk-box { background:#f5f5ff; border:1px solid #d8d8f5; border-radius:8px; padding:12px 14px; font-size:13px; color:#3a3a5c; margin-top:8px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>키즐링 박람회 후속 캠페인 기획안 — 미리보기</h1>
+  <p>입력: data/leads_sample.csv (원본 50건, 중복 1건 제외 실질 49건) · 산출: output/campaign_plan.md 기반 정적 미리보기. 리드 칩을 클릭하면 실제 이메일 초안이 펼쳐집니다.</p>
+</div>
+
+<div class="summary-row">
+  <div class="summary-card"><div class="summary-n">2</div><div class="summary-label">캠페인 기획안</div></div>
+  <div class="summary-card"><div class="summary-n">23</div><div class="summary-label">근거 리드 (중복 제외)</div></div>
+  <div class="summary-card"><div class="summary-n">11</div><div class="summary-label">우선순위 &#39;상&#39; 리드</div></div>
+  <div class="summary-card"><div class="summary-n">2</div><div class="summary-label">review_flag 주의 리드</div></div>
+</div>
+
+<table class="compare-table">
+  <thead>
+    <tr><th>캠페인</th><th>세그먼트 규모(실질)</th><th>우선순위 &#39;상&#39; 비중</th><th>검수 필요 리드</th><th>핵심 리스크</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1. 에듀테크 팀장 대상 대회 운영 자동화 전환</td><td>12건</td><td>6/12 (50%)</td><td>1건 (L033)</td><td>담당(영업팀) 확인이 24시간 넘으면 골든타임 이탈</td></tr>
+    <tr><td>2. 사업개발 대상 파트너십 제안</td><td>12건(실질 11건)</td><td>5/11 (45.5%)</td><td>1건 (L046)</td><td>담당(사업개발팀) 확인이 24시간 넘으면 골든타임 이탈</td></tr>
+  </tbody>
+</table>
+
+<div class="campaign">
+  <div class="campaign-title">Campaign 1. 에듀테크 팀장 대상 대회 운영 자동화 전환 캠페인</div>
+  <div class="campaign-tags">
+    <span class="tag">title = 팀장</span>
+    <span class="tag">org_type = 에듀테크기업</span>
+    <span class="tag">interest_feature = 대회운영SaaS</span>
+  </div>
+
+  <div class="section-title">우선순위 분포</div>
+  <div class="priority-bar">
+    <span class="bar-high" style="width:50%"></span>
+    <span class="bar-mid" style="width:41.7%"></span>
+    <span class="bar-low" style="width:8.3%"></span>
+  </div>
+  <div class="bar-legend">우선순위 분포 — 상 6건 · 중 5건 · 하 1건 (전체 12건)</div>
+
+  <div class="section-title">근거 리드 (12건) — 클릭하면 이메일 초안 확인</div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterLeads('campaign-1-leads','all',this)">전체</button>
+    <button class="filter-btn" onclick="filterLeads('campaign-1-leads','priority',this)">우선순위 상만</button>
+    <button class="filter-btn" onclick="filterLeads('campaign-1-leads','flag',this)">검수 필요만</button>
+  </div>
+  <div id="campaign-1-leads">
+    <details class="lead-detail" data-priority="상" data-flag="N">
+      <summary class="lead-chip priority">L021 상</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 정유진 팀장님, 기존 운영에 쉽게 붙는 대회 운영 자동화</div>
+        <div class="body">본문: 정유진 팀장님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 에듀브릿지에서 자사 교육앱 이용 학생을 대상으로 챌린지 이벤트를 키즐콘으로 운영할 수 있을지 검토 중이고 참여율이 핵심 KPI라고 하신 점이 기억에 남습니다. 키즐콘은 접수·결제·심사·결과발표를 자동화해 이벤트 운영 공수를 줄이고 참여와 결과 데이터를 한눈에 관리하도록 도와드립니다. 기존 앱 흐름에도 단계적으로 붙일 수 있습니다. 우선순위가 높으신 만큼 이번 주 안에 기술 도입 미팅을 제안드립니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="상" data-flag="N">
+      <summary class="lead-chip priority">L022 상</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 한승우 팀장님, 기존 운영에 쉽게 붙는 대회 운영 자동화</div>
+        <div class="body">본문: 한승우 팀장님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 클래스노트의 학습관리 SaaS와 키즐콘 연동 난이도를 가장 궁금해하시고 개발 공수 최소화가 중요하다고 하신 점을 잘 기억하고 있습니다. 키즐콘은 API 기반으로 기존 플랫폼에 가볍게 연결되어 대회 접수·결제·심사·결과발표를 자동화하므로 최소한의 개발로 운영 인력을 크게 줄여 드립니다. 연동 범위와 도입 일정을 함께 점검해 보시도록 이번 주 안에 기술 도입 미팅을 제안드립니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="중" data-flag="N">
+      <summary class="lead-chip">L024 중</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 조현우 팀장님, 기존 운영에 쉽게 붙는 대회 운영 자동화</div>
+        <div class="body">본문: 조현우 팀장님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 여러 기관의 대회 접수를 통합 운영하시면서 키즐콘 도입 시 기존 워크플로 연동이 쉬운지 물어보셨던 점이 기억에 남습니다. 키즐콘은 접수·결제·심사·결과발표를 자동화하고 기존 운영 흐름에 단계적으로 붙일 수 있어 여러 기관 행사를 한 기준으로 관리하도록 도와드립니다. 운영 공수와 실수는 줄고 관리 범위는 넓어집니다. 편하신 일정에 맞춰 기술 도입 미팅과 연동 안내 자료를 준비해 드리겠습니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="상" data-flag="N">
+      <summary class="lead-chip priority">L025 상</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 배수진 팀장님, 기존 운영에 쉽게 붙는 대회 운영 자동화</div>
+        <div class="body">본문: 배수진 팀장님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 러닝메이트에서 대회 접수·결제·심사를 한 번에 처리하고 싶으시고 운영 공수 절감 수치를 구체적으로 알고 싶어 하신 점이 기억에 남습니다. 키즐콘은 접수부터 결과발표까지를 자동화해 반복 업무를 없애고 도입 전후의 운영 시간을 비교해 절감 효과를 수치로 보여 드릴 수 있습니다. 실제 데이터로 판단하실 수 있도록 이번 주 안에 기술 도입 미팅을 잡아 함께 점검해 보시길 제안드립니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="상" data-flag="N">
+      <summary class="lead-chip priority">L026 상</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 윤태경 팀장님, 기존 운영에 쉽게 붙는 대회 운영 자동화</div>
+        <div class="body">본문: 윤태경 팀장님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 자사 LMS와 키즐콘의 API 연동 가능 여부를 확인하시고 연동만 되면 도입에 긍정적이라고 하신 점이 기억에 남습니다. 키즐콘은 API 기반으로 기존 LMS에 붙어 대회 접수·결제·심사·결과발표를 자동화하므로 사용하시던 환경과 데이터를 그대로 유지하면서 대회 운영 기능만 안전하게 확장하실 수 있습니다. 연동 스펙과 도입 일정을 구체적으로 맞춰 보시도록 이번 주 안에 기술 도입 미팅을 제안드립니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="중" data-flag="N">
+      <summary class="lead-chip">L028 중</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 이준영 팀장님, 기존 운영에 쉽게 붙는 대회 운영 자동화</div>
+        <div class="body">본문: 이준영 팀장님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 티칭허브에서 교내 대회 운영 기능을 교사에게 제공하고 싶으시고 도입 난이도와 교육 지원을 물어보셨던 점이 기억에 남습니다. 키즐콘은 접수·결제·심사·결과발표를 자동화해 교사가 손쉽게 대회를 열 수 있게 하고 도입 시 사용 교육과 자료도 함께 지원해 드립니다. 교사 한 분 한 분의 현장 부담은 줄고 대회 운영 활용도는 자연스럽게 높아집니다. 편하신 일정에 맞춰 기술 도입 미팅과 교사용 안내 자료를 준비해 드리겠습니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="상" data-flag="N">
+      <summary class="lead-chip priority">L030 상</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 최민재 팀장님, 기존 운영에 쉽게 붙는 대회 운영 자동화</div>
+        <div class="body">본문: 최민재 팀장님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 위캔에듀에서 대회 결과발표 자동화로 운영 인력을 줄이고 싶으시고 도입 사례 자료를 요청하셨던 점이 기억에 남습니다. 키즐콘은 접수·결제·심사·결과발표를 자동화해 반복 업무와 발표 준비 부담을 없애고 유사 기관의 도입 효과를 사례로 보여 드릴 수 있습니다. 인력은 줄고 진행 속도는 빨라집니다. 관심이 크신 만큼 이번 주 안에 기술 도입 미팅을 잡아 사례와 함께 설명드리겠습니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="중" data-flag="N">
+      <summary class="lead-chip">L031 중</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 정다은 팀장님, 기존 운영에 쉽게 붙는 대회 운영 자동화</div>
+        <div class="body">본문: 정다은 팀장님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 에듀모아에서 키즐콘 연동으로 챌린지 콘텐츠를 확보하고 싶으시고 기술 연동 미팅을 희망하셨던 점이 기억에 남습니다. 키즐콘은 API로 연결되어 대회·챌린지 운영과 결과 데이터를 자사 큐레이션 서비스에 자연스럽게 연동해 드립니다. 안전하게 관리되는 챌린지 콘텐츠를 안정적으로 공급받으실 수 있습니다. 요청 주신 대로 연동 범위를 함께 점검하는 기술 도입 미팅을 편하신 일정에 맞춰 안내드리겠습니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="중" data-flag="N">
+      <summary class="lead-chip">L032 중</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 한지호 팀장님, 기존 운영에 쉽게 붙는 대회 운영 자동화</div>
+        <div class="body">본문: 한지호 팀장님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 스쿨링크에서 통합이 쉬운지를 가장 중요하게 보시고 기존 시스템 마이그레이션 부담을 언급하신 점이 기억에 남습니다. 키즐콘은 API 기반으로 기존 시스템을 그대로 두고 대회 접수·결제·심사·결과발표 기능만 얹을 수 있어 대규모 이전 없이 단계적으로 도입하실 수 있습니다. 부담은 줄이고 기능은 넓히는 방향입니다. 연동 방식을 함께 설계해 보시도록 편하신 일정에 기술 도입 미팅을 안내드리겠습니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="하" data-flag="Y">
+      <summary class="lead-chip flag">L033 review_flag=Y</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [검수 필요][키즐링] 오나래 팀장님, 기존 운영에 쉽게 붙는 대회 운영 자동화</div>
+        <div class="body">본문: 오나래 팀장님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 부스에서 관심은 보여 주셨지만 구체적인 니즈까지는 자세히 확인하지 못해 기록된 관심 기능을 기준으로 우선 정리해 연락드립니다. 키즐콘은 대회 접수·결제·심사·결과발표를 자동화해 반복 업무와 운영 공수를 줄이고 기존 업무 흐름에도 무리 없이 단계적으로 붙일 수 있습니다. 우선 연동·운영 소개 자료를 보내드리고, 필요하신 부분을 확인한 뒤 맞춤 안내를 드리겠습니다. (상담 내용 보강 후 발송 필요)</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="상" data-flag="N">
+      <summary class="lead-chip priority">L035 상</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 김태현 팀장님, 기존 운영에 쉽게 붙는 대회 운영 자동화</div>
+        <div class="body">본문: 김태현 팀장님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 런잇에서 자사 앱의 대회 기능을 키즐콘으로 대체할지 검토하시며 연동 공수와 도입 기간을 물어보셨던 점이 기억에 남습니다. 키즐콘은 API 기반으로 기존 앱에 빠르게 붙어 대회 접수·결제·심사·결과발표를 자동화하므로 자체 개발보다 훨씬 짧은 기간에 적은 개발 공수만으로 대회 운영 기능을 갖추실 수 있습니다. 연동 범위와 일정을 구체적으로 맞춰 보시도록 이번 주 안에 기술 도입 미팅을 제안드립니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="중" data-flag="N">
+      <summary class="lead-chip">L037 중</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 박건우 팀장님, 기존 운영에 쉽게 붙는 대회 운영 자동화</div>
+        <div class="body">본문: 박건우 팀장님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 모두의클래스에서 대회 접수·결제 통합이 쉬운지 확인하시고 운영 공수 절감을 핵심 관심사로 두신 점이 기억에 남습니다. 키즐콘은 접수·결제·심사·결과발표를 하나로 자동화하고 기존 플랫폼에 단계적으로 연동되어 흩어져 있던 대회 운영을 한곳에서 처리하도록 해 드립니다. 반복 업무가 줄면 팀은 핵심 기획에 집중할 수 있습니다. 편하신 일정에 맞춰 기술 도입 미팅과 연동 안내 자료를 준비해 드리겠습니다.</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="section-title">대표 상담 인용</div>
+  <div class="quote"><b>L022</b> — "자사 플랫폼과 키즐콘 연동 난이도를 가장 궁금해함. 개발 공수 최소화가 중요하다고 함."</div>
+  <div class="quote"><b>L025</b> — "대회 접수·결제·심사를 한 번에 처리하고 싶음. 운영 공수 절감 수치를 알고 싶어함."</div>
+
+  <div class="section-title">후속 시퀀스</div>
+  <div class="seq">
+    <div class="seq-step"><div class="seq-day">Day 0</div><div class="seq-owner">담당: 마케팅팀</div><label><input type="checkbox"> 팀장용 초안 발송. CTA = 기술 도입 미팅. 우선순위 &#39;상&#39;은 48시간 내 미팅 슬롯 제안.</label></div>
+    <div class="seq-step"><div class="seq-day">Day 2-3</div><div class="seq-owner">담당: 세일즈엔지니어링팀</div><label><input type="checkbox"> 접수·결제·심사·결과발표 자동화 흐름과 연동 체크리스트 전달.</label></div>
+    <div class="seq-step"><div class="seq-day">Day 7</div><div class="seq-owner">담당: 영업팀</div><label><input type="checkbox"> 운영 방식·개발 리소스·연동 범위 확인 30분 미팅 제안.</label></div>
+  </div>
+
+  <div class="priority-box"><b>우선순위: 높음</b> — 세그먼트 12건 중 &#39;상&#39; 6건, 상담 메모 대부분 구체적, 48시간 골든타임 내 대응 시 이탈 방지 효과 큼.</div>
+  <div class="review-note">⚠ L033: 상담 니즈가 모호해 발송 전 담당자가 관심 기능과 다음 액션을 확인해야 합니다.</div>
+  <div class="risk-box">⚠ 리스크·차단요소: L033은 review_flag=Y라 상담 니즈 확인 전에는 발송을 보류합니다. 담당(영업팀)이 접수 후 24시간 내 1차 확인을 마치지 못하면 48시간 골든타임을 넘겨 이 리드는 시퀀스에서 실질적으로 이탈합니다. Day 2-3 연동 체크리스트는 세일즈엔지니어링팀 리소스에 의존하며, 12건이 한 번에 몰려 있어 인력이 부족하면 Day 7 미팅 제안까지 함께 늦어질 수 있습니다.</div>
+</div>
+
+<div class="campaign">
+  <div class="campaign-title">Campaign 2. 사업개발 대상 파트너십 제안 캠페인</div>
+  <div class="campaign-tags">
+    <span class="tag">title = 사업개발</span>
+    <span class="tag">interest_feature = 파트너십</span>
+  </div>
+
+  <div class="section-title">우선순위 분포 (중복 L050 제외, 실질 11건)</div>
+  <div class="priority-bar">
+    <span class="bar-high" style="width:45.5%"></span>
+    <span class="bar-mid" style="width:45.5%"></span>
+    <span class="bar-low" style="width:9%"></span>
+  </div>
+  <div class="bar-legend">우선순위 분포 — 상 5건 · 중 5건 · 하 1건 (실질 11건)</div>
+
+  <div class="section-title">근거 리드 (12건, 중복 제외 실질 11건) — 클릭하면 이메일 초안 확인</div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterLeads('campaign-2-leads','all',this)">전체</button>
+    <button class="filter-btn" onclick="filterLeads('campaign-2-leads','priority',this)">우선순위 상만</button>
+    <button class="filter-btn" onclick="filterLeads('campaign-2-leads','flag',this)">검수 필요만</button>
+  </div>
+  <div id="campaign-2-leads">
+    <details class="lead-detail" data-priority="상" data-flag="N">
+      <summary class="lead-chip priority">L039 상</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 장민호 님, 키즐콘 공동 공급·파트너십 제안의 건</div>
+        <div class="body">본문: 장민호 님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 한국교육박람회사무국에서 참가 기관에 키즐콘을 공동 공급하는 파트너십 모델을 제안하시고 수익 배분 구조를 논의하고 싶다고 하신 점이 기억에 남습니다. 키즐콘은 대회 운영 원스톱 SaaS로 사무국의 기관 네트워크와 만나면 공동 공급과 공동 마케팅으로 상호 수익을 만들 수 있습니다. 수익 배분과 공급 범위를 담은 파트너십 제안서를 정리해 보내드리겠습니다. 우선순위가 높은 만큼 이번 주 안에 논의 미팅도 함께 제안드립니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="상" data-flag="N">
+      <summary class="lead-chip priority">L040 상</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 임하영 님, 키즐콘 공동 공급·파트너십 제안의 건</div>
+        <div class="body">본문: 임하영 님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 에듀파트너스에서 전국 학원 네트워크에 키즐콘을 공급하는 채널 파트너십에 관심 주시고 마진 구조를 물어보셨던 점이 기억에 남습니다. 에듀파트너스의 유통 채널과 키즐콘의 대회 운영·콘텐츠 안전 기능이 만나면 공동 공급과 공동 마케팅으로 반복 가능한 수익 구조를 함께 만들 수 있습니다. 마진과 공급 조건을 담은 파트너십 제안서를 정리해 보내드리겠습니다. 이번 주 안에 논의 미팅도 함께 제안드립니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="상" data-flag="N">
+      <summary class="lead-chip priority">L041 상</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 강세진 님, 키즐콘 공동 공급·파트너십 제안의 건</div>
+        <div class="body">본문: 강세진 님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 글로벌에듀그룹에서 해외 진출 시 키즐콘 공동 마케팅 가능성을 논의하시고 제안서를 정식으로 받고 싶다고 하신 점이 기억에 남습니다. 키즐콘은 CES 2026 혁신상으로 검증된 안전 기술과 대회 운영 SaaS를 갖춰 글로벌 시장에서 공동 마케팅과 기관 공급 파트너로 함께 성장할 여지가 큽니다. 협력 모델과 시장별 접근을 담은 파트너십 제안서를 정식으로 정리해 보내드리겠습니다. 이번 주 안에 논의 미팅도 제안드립니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="중" data-flag="N">
+      <summary class="lead-chip">L042 중</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 오지훈 님, 키즐콘 공동 공급·파트너십 제안의 건</div>
+        <div class="body">본문: 오지훈 님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 키즈컨텐츠랩에서 챌린지 콘텐츠의 공동 기획·공급 파트너십에 관심 주시고 상호 시너지 모델을 제안해 주신 점이 기억에 남습니다. 키즐콘의 안전한 챌린지 운영 환경과 키즈컨텐츠랩의 제작 역량이 만나면 안심할 수 있는 어린이 콘텐츠를 함께 만들어 공동 공급할 수 있습니다. 협력 방식과 공동 기획 범위를 담은 파트너십 제안서를 정리해 보내드리겠습니다. 편하신 일정에 맞춰 논의 미팅도 안내드리겠습니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="중" data-flag="N">
+      <summary class="lead-chip">L043 중</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 한예슬 님, 키즐콘 공동 공급·파트너십 제안의 건</div>
+        <div class="body">본문: 한예슬 님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 에듀넷제휴팀에서 기관 공급 계약 형태로 키즐콘 도입을 검토하시고 공공조달 절차를 안내해 달라고 하신 점이 기억에 남습니다. 키즐콘은 대회 운영과 콘텐츠 안전을 갖춘 원스톱 SaaS로 공공 기관 공급에 맞춰 절차와 요건을 함께 정리해 드릴 수 있습니다. 기관 공급 방식과 공공조달 대응을 담은 파트너십 제안서를 준비해 보내드리겠습니다. 편하신 일정에 맞춰 절차 논의 미팅도 안내드리겠습니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="상" data-flag="N">
+      <summary class="lead-chip priority">L044 상</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 신동욱 님, 키즐콘 공동 공급·파트너십 제안의 건</div>
+        <div class="body">본문: 신동욱 님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 러닝브릿지에서 자사 회원사에 키즐콘을 번들로 제공하는 모델에 관심 주시고 수익 모델을 구체적으로 물어보셨던 점이 기억에 남습니다. 키즐콘을 회원사 대상 번들로 묶으면 회원 혜택은 강화되고 공동 공급과 수익 배분으로 양사가 반복 수익을 만들 수 있습니다. 번들 구성과 수익 배분안을 담은 파트너십 제안서를 정리해 보내드리겠습니다. 관심이 크신 만큼 이번 주 안에 논의 미팅도 함께 제안드립니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="중" data-flag="N">
+      <summary class="lead-chip">L045 중</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 배현주 님, 키즐콘 공동 공급·파트너십 제안의 건</div>
+        <div class="body">본문: 배현주 님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 에듀얼라이언스에서 회원 학원 대상 공동 구매 파트너십을 제안하시고 공동 마케팅 예산 분담을 논의하고 싶어 하신 점이 기억에 남습니다. 키즐콘은 여러 학원이 함께 도입할수록 조건이 좋아지는 구조라 연합체의 공동 구매와 잘 맞고 공동 마케팅으로 서로의 브랜드를 넓힐 수 있습니다. 공동 구매 조건과 마케팅 분담안을 담은 파트너십 제안서를 정리해 보내드리겠습니다. 편하신 일정에 맞춰 논의 미팅도 안내드리겠습니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="하" data-flag="Y">
+      <summary class="lead-chip flag">L046 review_flag=Y</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [검수 필요][키즐링] 윤재호 님, 키즐콘 공동 공급·파트너십 제안의 건</div>
+        <div class="body">본문: 윤재호 님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 부스가 붐벼 짧게 뵈어 구체적인 관심 내용을 자세히 확인하지 못했지만, 파트너십 방향에 관심 주신 것으로 기억합니다. 키즐콘은 대회 운영과 콘텐츠 안전을 갖춘 원스톱 SaaS로 공동 공급·공동 마케팅 파트너십을 함께 그려갈 수 있습니다. 우선 파트너십 소개 자료를 보내드리고, 관심 방향을 조금 더 확인한 뒤 맞춤 제안서를 준비해 보내드리겠습니다. (상담 내용 보강 후 발송 필요)</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="중" data-flag="N">
+      <summary class="lead-chip">L047 중</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 정수아 님, 키즐콘 공동 공급·파트너십 제안의 건</div>
+        <div class="body">본문: 정수아 님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 키즈브랜드컴퍼니에서 키즐콘과의 공동 브랜딩 캠페인에 관심 주시고 양사 채널의 교차 프로모션 아이디어를 제안해 주신 점이 기억에 남습니다. 안전한 어린이 콘텐츠라는 키즐콘의 강점과 키즈브랜드컴퍼니의 브랜딩 역량이 만나면 공동 마케팅으로 서로의 고객에게 자연스럽게 닿을 수 있습니다. 공동 브랜딩과 교차 프로모션 방안을 담은 파트너십 제안서를 정리해 보내드리겠습니다. 편하신 일정에 맞춰 논의 미팅도 안내드리겠습니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="중" data-flag="N">
+      <summary class="lead-chip">L048 중</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 조은별 님, 키즐콘 공동 공급·파트너십 제안의 건</div>
+        <div class="body">본문: 조은별 님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 에듀테크진흥원에서 관내 교육기관에 키즐콘을 보급하는 사업 협력 가능성을 타진하시고 기관 공급 계약 조건을 문의해 주신 점이 기억에 남습니다. 키즐콘은 대회 운영과 콘텐츠 안전을 갖춘 원스톱 SaaS로 관내 기관 보급 사업에 맞춰 공급 범위와 계약 조건을 함께 설계해 드릴 수 있습니다. 보급 방안과 기관 공급 조건을 담은 파트너십 제안서를 준비해 보내드리겠습니다. 편하신 일정에 맞춰 협력 논의 미팅도 안내드리겠습니다.</div>
+      </div>
+    </details>
+    <details class="lead-detail" data-priority="상" data-flag="N">
+      <summary class="lead-chip priority">L049 상</summary>
+      <div class="lead-email">
+        <div class="subj">제목: [키즐링] 김선우 님, 키즐콘 공동 공급·파트너십 제안의 건</div>
+        <div class="body">본문: 김선우 님, 안녕하세요. 에듀플러스위크에서 인사드린 키즐링입니다. 러닝네트웍스에서 가맹 학원에 키즐콘을 공급하는 채널 파트너십을 제안하시고 수익 배분과 독점 여부를 논의하고 싶어 하신 점이 기억에 남습니다. 키즐콘은 가맹 네트워크와 만나면 학원별 도입을 한 번에 넓힐 수 있어 공동 공급과 수익 배분으로 안정적인 채널 매출을 함께 만들 수 있습니다. 수익 배분과 공급 범위, 독점 조건을 담은 파트너십 제안서를 정리해 보내드리겠습니다. 관심이 크신 만큼 이번 주 안에 논의 미팅도 함께 제안드립니다.</div>
+      </div>
+    </details>
+    <span class="lead-chip" style="opacity:.5">L050 (L039 중복 — 제외, 이메일 미생성)</span>
+  </div>
+
+  <div class="section-title">대표 상담 인용</div>
+  <div class="quote"><b>L039</b> — "참가 기관에 키즐콘을 공동 공급하는 파트너십 모델을 제안. 수익 배분 구조 논의 희망."</div>
+  <div class="quote"><b>L040</b> — "전국 학원 네트워크에 키즐콘을 공급하는 채널 파트너십 관심. 마진 구조를 물음."</div>
+  <div class="quote"><b>L044</b> — "자사 회원사에 키즐콘을 번들로 제공하는 모델 관심. 수익 모델을 구체적으로 질문."</div>
+
+  <div class="section-title">후속 시퀀스</div>
+  <div class="seq">
+    <div class="seq-step"><div class="seq-day">Day 0</div><div class="seq-owner">담당: 마케팅팀</div><label><input type="checkbox"> 사업개발용 초안 발송. 우선순위 &#39;상&#39;은 제안서 송부 + 논의 미팅 제안.</label></div>
+    <div class="seq-step"><div class="seq-day">Day 2-3</div><div class="seq-owner">담당: 사업개발팀</div><label><input type="checkbox"> 채널 파트너십·공동 공급·번들 모델 1페이지 제안서 전달.</label></div>
+    <div class="seq-step"><div class="seq-day">Day 7</div><div class="seq-owner">담당: 사업개발팀</div><label><input type="checkbox"> 수익 배분·대상 기관 수·공동 마케팅 범위 협의 미팅 제안.</label></div>
+  </div>
+
+  <div class="priority-box"><b>우선순위: 높음</b> — 세그먼트 12건(실질 11건) 중 &#39;상&#39; 5건, 수익 배분·마진·번들 등 구체적 상담 내용, 반복 적용 가능한 제안서 템플릿으로 실행 효율 높음.</div>
+  <div class="review-note">⚠ L046: 상담 메모 없음 — 발송 전 명함·현장 기록으로 제휴 관심사를 보강해야 합니다. L050은 L039 중복으로 별도 발송하지 않습니다.</div>
+  <div class="risk-box">⚠ 리스크·차단요소: L046은 상담 메모가 없어 review_flag=Y입니다. 담당(사업개발팀)이 접수 후 24시간 내 명함·현장 기록·담당자 기억으로 제휴 관심사를 보강하지 못하면 48시간 골든타임을 넘겨 이 리드는 시퀀스에서 실질적으로 이탈합니다. Day 2-3 1페이지 제안서는 사업개발팀이 단독 작성하며, 우선순위 &#39;상&#39; 5건이 동시에 요구되므로 템플릿화하지 않으면 일정이 밀릴 수 있습니다.</div>
+</div>
+
+<p class="footer-note">follow_up_priority는 입력값 그대로 사용했으며, 별도 리드 스코어링을 하지 않았습니다. 실제 발송·CRM 연동 기능은 포함하지 않습니다. 필터·토글은 이미 렌더링된 데이터를 보이거나 숨기는 기능일 뿐, 서버·외부 호출을 하지 않습니다.</p>
+
+</div>
+<script>
+function filterLeads(groupId, mode, btn) {
+  var group = document.getElementById(groupId);
+  var items = group.querySelectorAll('.lead-detail');
+  items.forEach(function (el) {
+    var show = mode === 'all'
+      || (mode === 'priority' && el.dataset.priority === '상')
+      || (mode === 'flag' && el.dataset.flag === 'Y');
+    el.hidden = !show;
+  });
+  var bar = btn.closest('.filter-bar');
+  bar.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>키즐링 후속 이메일 — Basic</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif; background: #f4f5f7; color: #1a1a2e; line-height: 1.6; }
+.container { max-width: 1080px; margin: 0 auto; padding: 40px 24px; }
+
+.header { background: #fff; border-radius: 12px; padding: 32px 36px; margin-bottom: 24px; border-left: 5px solid #6c4cf0; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+.level-badge { display: inline-block; background: #6c4cf0; color: white; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-bottom: 14px; letter-spacing: .5px; }
+.header h1 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+.header-meta { font-size: 13px; color: #6c757d; display: flex; flex-wrap: wrap; gap: 16px; }
+
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+.stat { background: #fff; border-radius: 10px; padding: 20px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,.06); border-top: 4px solid; }
+.stat-n { font-size: 40px; font-weight: 800; }
+.stat-label { font-size: 13px; color: #666; margin-top: 2px; }
+.stat-pct { font-size: 13px; font-weight: 600; margin-top: 6px; }
+.c-purple { border-color: #6c4cf0; color: #6c4cf0; }
+.c-blue { border-color: #2f80ed; color: #2f80ed; }
+.c-teal { border-color: #11998e; color: #11998e; }
+.c-amber { border-color: #f0a020; color: #f0a020; }
+
+.section { background: #fff; border-radius: 12px; padding: 28px 32px; margin-bottom: 24px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+.section-title { font-size: 15px; font-weight: 700; padding-bottom: 14px; margin-bottom: 20px; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 8px; }
+
+.bar-row { margin-bottom: 12px; }
+.bar-meta { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; font-weight: 500; }
+.bar-track { background: #f0f2f5; border-radius: 6px; height: 30px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 12px; color: white; font-size: 12px; font-weight: 700; letter-spacing: .3px; }
+
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.f-btn { padding: 5px 14px; border: 1.5px solid #dee2e6; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; background: white; color: #444; transition: all .15s; }
+.f-btn:hover { border-color: #adb5bd; }
+.f-btn.on { background: #1a1a2e; color: white; border-color: #1a1a2e; }
+.note { font-size: 12px; color: #888; margin-bottom: 14px; }
+
+/* Email cards */
+.mail-grid { display: flex; flex-direction: column; gap: 16px; }
+.mail-card { border: 1px solid #e9ecef; border-radius: 10px; overflow: hidden; }
+.mail-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; background: #fafbfc; border-bottom: 1px solid #eee; flex-wrap: wrap; }
+.mail-who { font-size: 13px; font-weight: 700; }
+.mail-who .org { font-weight: 500; color: #777; font-size: 12px; }
+.mail-flags { display: flex; gap: 6px; align-items: center; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 5px; white-space: nowrap; }
+.b-원장 { background: #ece7ff; color: #5b34d6; }
+.b-팀장 { background: #e2efff; color: #1f6fd6; }
+.b-사업개발 { background: #e2f5f1; color: #0c7a6e; }
+.pri { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+.pri-상 { background: #ffe0e3; color: #c9323e; }
+.pri-중 { background: #fff3cd; color: #856404; }
+.pri-하 { background: #eef0f2; color: #667; }
+.rf { font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 4px; }
+.rf-Y { background: #fff0f0; color: #c9323e; border: 1px solid #f3c9cd; }
+.rf-N { background: #eef7f0; color: #1f7a44; border: 1px solid #cfe9d6; }
+.mail-body { padding: 14px 16px; }
+.mail-subject { font-size: 13.5px; font-weight: 700; margin-bottom: 8px; }
+.mail-text { font-size: 13px; color: #333; line-height: 1.7; white-space: pre-line; }
+.mail-cta { margin-top: 10px; font-size: 12px; }
+.mail-cta .cta-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-right: 6px; }
+.mail-cta .cta-val { display: inline-block; background: #6c4cf0; color: #fff; padding: 3px 10px; border-radius: 14px; font-weight: 700; }
+.char { font-size: 11px; color: #aaa; margin-left: 6px; }
+
+.alt-note { background: #fff8f8; border: 1px dashed #f3c9cd; border-radius: 8px; padding: 12px 16px; font-size: 12.5px; color: #555; }
+.alt-note strong { color: #c9323e; }
+
+.dec-table td { font-size: 12.5px; vertical-align: top; }
+.dec-table td:first-child { font-weight: 600; white-space: nowrap; color: #444; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th { background: #f8f9fa; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #6c757d; padding: 10px 12px; text-align: left; border-bottom: 2px solid #e9ecef; }
+tbody td { padding: 9px 12px; border-bottom: 1px solid #f0f2f5; vertical-align: top; }
+
+@media(max-width:700px) {
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <div class="level-badge">🟢 Basic — 100점</div>
+  <h1>키즐링 박람회 리드 맞춤 후속 이메일 초안</h1>
+  <div class="header-meta">
+    <span>📅 박람회: 에듀플러스위크 2026</span>
+    <span>📊 원본 50건 → 중복 제거 후 <strong>49건</strong></span>
+    <span>✍️ 작성: [이름]</span>
+    <span>📆 2026-07-01</span>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-row">
+  <div class="stat c-purple"><div class="stat-n">20</div><div class="stat-label">원장</div><div class="stat-pct">40.0%</div></div>
+  <div class="stat c-blue"><div class="stat-n">18</div><div class="stat-label">팀장</div><div class="stat-pct">36.0%</div></div>
+  <div class="stat c-teal"><div class="stat-n">12</div><div class="stat-label">사업개발</div><div class="stat-pct">24.0%</div></div>
+  <div class="stat c-amber"><div class="stat-n">4</div><div class="stat-label">review_flag = Y</div><div class="stat-pct">보강 필요</div></div>
+</div>
+
+<!-- Distribution -->
+<div class="section">
+  <div class="section-title">📊 직책별 분포 (총 50건)</div>
+  <div class="bar-row">
+    <div class="bar-meta"><span>원장</span><span>20건</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:40%;background:#6c4cf0">40.0%</div></div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-meta"><span>팀장</span><span>18건</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:36%;background:#2f80ed">36.0%</div></div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-meta"><span>사업개발</span><span>12건</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:24%;background:#11998e">24.0%</div></div>
+  </div>
+</div>
+
+<!-- Email drafts -->
+<div class="section">
+  <div class="section-title">✉️ 직책별 이메일 초안 샘플 (대표 6건)</div>
+  <p class="note">⚠️ L009 이메일 결측 → 후속 메모 전환. L050 = L039 중복 → 제외. L012·L015·L033·L046 상담 메모 결측·모호 → review_flag = Y. CTA는 직책별로 다름(원장=무료 데모 / 팀장=기술 도입 미팅 / 사업개발=파트너십 제안서).</p>
+  <div class="filter-row">
+    <button class="f-btn on" onclick="ft('all',this)">전체 샘플 (6)</button>
+    <button class="f-btn" onclick="ft('원장',this)">🟣 원장</button>
+    <button class="f-btn" onclick="ft('팀장',this)">🔵 팀장</button>
+    <button class="f-btn" onclick="ft('사업개발',this)">🟢 사업개발</button>
+    <button class="f-btn" onclick="ft('Y',this)">⚠️ review_flag=Y</button>
+  </div>
+
+  <div class="mail-grid" id="mg">
+
+    <!-- 원장, 구체 상담 -->
+    <div class="mail-card" data-t="원장" data-rf="N">
+      <div class="mail-head">
+        <div class="mail-who">L001 · 김민준 <span class="org">한빛영어학원 · 학원</span></div>
+        <div class="mail-flags"><span class="badge b-원장">원장</span><span class="pri pri-상">상</span><span class="rf rf-N">FLAG N</span></div>
+      </div>
+      <div class="mail-body">
+        <div class="mail-subject">제목: [키즐링] 김민준 원장님, 우리 원 아이들의 영어스피치 재능을 보여주는 방법 — 키즐콘 안내</div>
+        <div class="mail-text">김민준 원장님, 안녕하세요. 에듀플러스위크 부스에서 인사드렸던 키즐링입니다.
+한빛영어학원의 영어스피치 대회를 접수·심사·결과발표까지 수기로 운영하시느라 번거롭다고 하셨던 말씀이 기억에 남습니다. 키즐콘은 이 과정을 한 번에 자동화하고, 아이들의 챌린지 영상을 안전하게 기록해 학부모께 바로 공유해 드립니다. 원생의 성취가 보이면 만족도와 재등록률도 함께 올라갑니다.</div>
+        <div class="mail-cta"><span class="cta-label">CTA</span><span class="cta-val">이번 주 무료 데모 신청</span><span class="char">312자</span></div>
+      </div>
+    </div>
+
+    <!-- 원장, review_flag Y -->
+    <div class="mail-card" data-t="원장" data-rf="Y">
+      <div class="mail-head">
+        <div class="mail-who">L015 · 홍지호 <span class="org">학습의숲논술학원 · 학원</span></div>
+        <div class="mail-flags"><span class="badge b-원장">원장</span><span class="pri pri-하">하</span><span class="rf rf-Y">FLAG Y</span></div>
+      </div>
+      <div class="mail-body">
+        <div class="mail-subject">제목: [키즐링] 홍지호 원장님, 에듀플러스위크에서 뵙고 인사드립니다 — 키즐콘 소개</div>
+        <div class="mail-text">홍지호 원장님, 안녕하세요. 에듀플러스위크 부스에서 잠깐 인사 나눴던 키즐링입니다. 바쁜 현장이라 짧게 뵈었지만, 관심 보여주신 대회 운영 SaaS를 소개해 드리고 싶어 연락드립니다. 키즐콘은 교내 대회 접수·심사·결과발표를 자동화해 운영 부담을 덜어드립니다. 우선 소개 자료와 사례집을 보내드리겠습니다.</div>
+        <div class="mail-cta"><span class="cta-label">CTA</span><span class="cta-val">소개 자료·사례집 발송</span><span class="char">258자</span></div>
+        <div style="margin-top:10px"><span class="rf rf-Y">⚠️ review_flag = Y</span> <span style="font-size:12px;color:#888">상담 메모 공란 → 발송 전 담당자가 상담 내용 보강 필요</span></div>
+      </div>
+    </div>
+
+    <!-- 팀장, 구체 상담 -->
+    <div class="mail-card" data-t="팀장" data-rf="N">
+      <div class="mail-head">
+        <div class="mail-who">L022 · 한승우 <span class="org">클래스노트 · 에듀테크기업</span></div>
+        <div class="mail-flags"><span class="badge b-팀장">팀장</span><span class="pri pri-상">상</span><span class="rf rf-N">FLAG N</span></div>
+      </div>
+      <div class="mail-body">
+        <div class="mail-subject">제목: [키즐링] 한승우 팀장님, 기존 시스템에 쉽게 붙는 대회 운영 자동화 — 키즐콘</div>
+        <div class="mail-text">한승우 팀장님, 안녕하세요. 에듀플러스위크에서 클래스노트의 학습관리 SaaS와 키즐콘 연동 난이도를 가장 궁금해하셨던 점, 잘 기억하고 있습니다. 키즐콘은 API 기반으로 기존 플랫폼에 가볍게 붙어 대회 접수·결제·심사·결과발표를 자동화하므로, 개발 공수를 최소화하면서 운영 인력을 크게 줄여드립니다. 연동 범위와 도입 일정을 함께 점검해 보시겠어요?</div>
+        <div class="mail-cta"><span class="cta-label">CTA</span><span class="cta-val">기술 도입 미팅 예약</span><span class="char">336자</span></div>
+      </div>
+    </div>
+
+    <!-- 팀장, 중 -->
+    <div class="mail-card" data-t="팀장" data-rf="N">
+      <div class="mail-head">
+        <div class="mail-who">L034 · 서지원 <span class="org">에듀핏 · 에듀테크기업</span></div>
+        <div class="mail-flags"><span class="badge b-팀장">팀장</span><span class="pri pri-중">중</span><span class="rf rf-N">FLAG N</span></div>
+      </div>
+      <div class="mail-body">
+        <div class="mail-subject">제목: [키즐링] 서지원 팀장님, 줄넘기 챌린지 안전 필터로 운영 공수 줄이기 — 키즐콘</div>
+        <div class="mail-text">서지원 팀장님, 안녕하세요. 에듀플러스위크에서 줄넘기 챌린지 영상의 콘텐츠 안전 필터와 운영 공수 절감 수치를 물어보셨던 것 기억합니다. 키즐콘의 안전 필터는 유해 콘텐츠를 99% 자동 차단해, 검수에 들이던 인력을 크게 줄여드립니다. 에듀핏 운영 환경에 맞춘 도입 효과 자료를 먼저 보내드리겠습니다.</div>
+        <div class="mail-cta"><span class="cta-label">CTA</span><span class="cta-val">도입 효과 자료 발송 후 미팅 제안</span><span class="char">279자</span></div>
+      </div>
+    </div>
+
+    <!-- 사업개발, 구체 상담 -->
+    <div class="mail-card" data-t="사업개발" data-rf="N">
+      <div class="mail-head">
+        <div class="mail-who">L040 · 임하영 <span class="org">에듀파트너스 · 에듀테크기업</span></div>
+        <div class="mail-flags"><span class="badge b-사업개발">사업개발</span><span class="pri pri-상">상</span><span class="rf rf-N">FLAG N</span></div>
+      </div>
+      <div class="mail-body">
+        <div class="mail-subject">제목: [키즐링] 임하영 님, 키즐콘 채널 파트너십 제안의 건</div>
+        <div class="mail-text">임하영 님, 안녕하세요. 에듀플러스위크에서 전국 학원 네트워크에 키즐콘을 공급하는 채널 파트너십과 마진 구조를 논의해 주셔서 반가웠습니다. 에듀파트너스의 유통 채널과 키즐링의 대회 운영 SaaS가 만나면, 공동 공급·공동 마케팅으로 상호 수익을 만들 수 있다고 봅니다. 수익 배분 모델을 포함한 파트너십 제안서를 정리해 보내드리겠습니다.</div>
+        <div class="mail-cta"><span class="cta-label">CTA</span><span class="cta-val">파트너십 제안서 송부</span><span class="char">324자</span></div>
+      </div>
+    </div>
+
+    <!-- 사업개발, review_flag Y -->
+    <div class="mail-card" data-t="사업개발" data-rf="Y">
+      <div class="mail-head">
+        <div class="mail-who">L046 · 윤재호 <span class="org">스마트에듀홀딩스 · 에듀테크기업</span></div>
+        <div class="mail-flags"><span class="badge b-사업개발">사업개발</span><span class="pri pri-하">하</span><span class="rf rf-Y">FLAG Y</span></div>
+      </div>
+      <div class="mail-body">
+        <div class="mail-subject">제목: [키즐링] 윤재호 님, 에듀플러스위크에서 뵙고 파트너십 인사드립니다</div>
+        <div class="mail-text">윤재호 님, 안녕하세요. 에듀플러스위크 부스에서 인사 나눴던 키즐링입니다. 현장이 바빠 짧게 뵈었지만, 파트너십에 관심을 보여주셔서 연락드립니다. 키즐링은 키즐콘을 기반으로 공동 공급·공동 마케팅 파트너십을 함께 그려가고 있습니다. 관심 방향을 조금 더 여쭙고, 적합한 협력 모델을 담은 제안서를 준비해 보내드리겠습니다.</div>
+        <div class="mail-cta"><span class="cta-label">CTA</span><span class="cta-val">파트너십 제안서 송부</span><span class="char">263자</span></div>
+        <div style="margin-top:10px"><span class="rf rf-Y">⚠️ review_flag = Y</span> <span style="font-size:12px;color:#888">상담 메모 "없음" → 관심 방향 확인 후 제안서 맞춤화 필요</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Exception handling -->
+<div class="section">
+  <div class="section-title">🚫 예외 처리 — 이메일 없는 리드 후속 메모</div>
+  <div class="alt-note">
+    <strong>L009 · 류현우 / 에듀빌영재교육원 / 원장 (우선순위 중)</strong><br>
+    사유: 이메일 정보 없음 (명함만 수령) → 이메일 발송 불가<br>
+    권장 액션: 박람회 주최 측에 연락처 요청 또는 명함 재확인 후 전화 후속. 관심 = 대회운영SaaS(과학·수학 대회 온라인 접수). 우선순위 '중' 기준 72시간 내 접촉.
+  </div>
+</div>
+
+<!-- Decision log -->
+<div class="section">
+  <div class="section-title">📝 의사결정 로그</div>
+  <div class="tbl-wrap">
+  <table class="dec-table">
+    <thead><tr><th>결정 항목</th><th>선택</th><th>근거</th></tr></thead>
+    <tbody>
+      <tr><td>직책 소구점 매핑</td><td>원장=원생효과 / 팀장=도입·공수 / 사업개발=수익모델</td><td>원장은 학부모 만족, 팀장은 실무 부담, 사업개발은 수익을 묻는다는 부스 상담 패턴 반영</td></tr>
+      <tr><td>L009 처리</td><td>후속 메모 전환</td><td>이메일 없음 → 발송 불가. 전화/주최측 연락처 요청으로 대체</td></tr>
+      <tr><td>L012·L015·L033·L046</td><td>review_flag = Y</td><td>상담 메모 공란 또는 모호 → 본문 일반화 후 발송 전 담당자 보강</td></tr>
+      <tr><td>L050 처리</td><td>중복 제외</td><td>L039와 name·organization·consultation_note 완전 일치 → 49건 기준 집계</td></tr>
+      <tr><td>follow_up_priority</td><td>입력값으로만 사용</td><td>CTA 강도 조절에만 활용, 직접 스코어 산출 금지(제외 범위)</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+</div>
+<script>
+function ft(type, btn) {
+  document.querySelectorAll('#mg .mail-card').forEach(c => {
+    var show = (type === 'all') || (c.dataset.t === type) || (type === 'Y' && c.dataset.rf === 'Y');
+    c.style.display = show ? '' : 'none';
+  });
+  document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+</script>
+</body>
+</html>

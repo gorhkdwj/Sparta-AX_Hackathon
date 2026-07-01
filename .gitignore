@@ -21,5 +21,8 @@ Thumbs.db
 .vscode/
 .idea/
 
+# 도구 부산물(브라우저 자동화 스냅샷 등)
+.playwright-mcp/
+
 # 대용량 원본 데이터(필요 시 주석 해제)
 # data/raw/
