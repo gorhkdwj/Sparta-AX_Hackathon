@@ -10,6 +10,35 @@
 
 ---
 
+### W-023 · 전체 스냅샷 커밋·푸시 + GitHub Pages 게시 + 저장소 오타명 수정
+**요청**
+- W-002 이후 미커밋분을 "싹 커밋·푸시"(폴더 정리는 후속). 이어서 `발표/키즐링 후속 이메일 자동화.html`을 git으로 웹 게시 가능한지 문의 → "깔끔 URL로 게시" 선택. 저장소명 오타(Hackerton→Hackathon) 수정 요청.
+
+**수행 작업**
+- `.playwright-mcp/`(브라우저 자동화 부산물)를 `.gitignore`에 추가해 커밋에서 제외.
+- 전체 스냅샷 커밋(`8bde281`, 95파일: Skill 8개·submission/·키즐링/·docs/·발표/·dummy-test/ 등) → `origin/main` 푸시.
+- GitHub Pages 게시: 루트 `index.html`(발표자료 리다이렉트)·`.nojekyll` 추가 커밋(`46655bc`) → `gh api`로 Pages 활성화(source: main `/`).
+- 저장소 rename: `Sparta-AX_Hackerton` → `Sparta-AX_Hackathon`(`gh repo rename`), 로컬 `origin` remote URL 갱신.
+
+**변경 파일**
+- `.gitignore`, `index.html`(신규), `.nojekyll`(신규), `Worklog.md`. (그 외 95파일은 기존 산출물 일괄 반영.)
+
+**검증**
+- 스테이징 시 `.playwright-mcp/` 미포함·비밀정보 파일 없음 확인. push 성공(`bcee116..8bde281`, `8bde281..46655bc`).
+- Pages 빌드 상태 `built` 확인(`gh api repos/gorhkdwj/Sparta-AX_Hackathon/pages`).
+- 실행 환경 sandbox가 외부 URL `curl`을 차단(DNS 미해결)해 브라우저 200 응답은 미검증 — GitHub API 빌드 상태로 대체 검증.
+
+**판단 근거**
+- 저장소가 이미 PUBLIC이라 Pages 게시로 새로 노출되는 정보는 없음.
+- 한글+공백 파일명의 인코딩 URL 대신 루트 리다이렉트로 깔끔한 진입점 제공. Jekyll 오작동 방지로 `.nojekyll` 추가.
+
+**결과**
+- 완료: 새 게시 URL `https://gorhkdwj.github.io/Sparta-AX_Hackathon/` 라이브(발표자료로 리다이렉트).
+- 남은 작업: 후속 폴더 정리(키즐링/·submission/ 중복, 발표/ 대용량 자산).
+- 한계·미검증: 브라우저 실제 렌더 결과는 환경 제약으로 미확인.
+
+---
+
 ### W-022 · 발표자료(8장) 클로드 디자인 입력 프롬프트 설계
 **요청**
 - 발표자료 제작 task. 기존 Archive 발표자료는 지시 전까지 미참조. 8~9장 HTML 발표자료를 구상하고, 실제 생성은 클로드 디자인으로 진행할 예정이므로 "전체 구조 프롬프트 → 페이지별 프롬프트"를 작성. 톤·강조·구조·내용은 노션 프로젝트 정리 페이지 참고. 진행 전 필요한 질문 먼저.
