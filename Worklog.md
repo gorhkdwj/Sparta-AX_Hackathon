@@ -10,6 +10,29 @@
 
 ---
 
+### W-024 · 인터랙티브 캠페인 미리보기 Pages 게시(짧은 alias)
+**요청**
+- `submission/output/campaign_plan_preview.html`도 git으로 웹 게시.
+
+**수행 작업**
+- 해당 파일이 이미 커밋돼 있고 경로가 전부 ASCII라 Pages 루트 서빙으로 이미 접근 가능함을 확인.
+- 짧은 진입 URL용으로 루트 `campaign.html`(→ `submission/output/campaign_plan_preview.html` 리다이렉트) 추가·커밋(`cebe620`)·푸시.
+
+**변경 파일**
+- `campaign.html`(신규), `Worklog.md`.
+
+**검증**
+- Pages 빌드 상태 `built` 확인.
+- Playwright로 `.../campaign.html` 접속 → `.../submission/output/campaign_plan_preview.html`로 리다이렉트 확인. 타이틀·캠페인 2건·리드 칩 23개(12+11)·필터 6개·비교표 2행 렌더 확인. 콘솔 에러는 `favicon.ico` 404(무해)뿐.
+
+**판단 근거**
+- 경로가 ASCII라 직접 URL도 되지만, 발표 QR/공유용으로 짧은 alias가 유용.
+
+**결과**
+- 완료: `.../campaign.html`(짧은) 및 `.../submission/output/campaign_plan_preview.html`(직접) 모두 라이브. 발표 슬라이드의 라이브 데모 링크로 활용 가능.
+
+---
+
 ### W-023 · 전체 스냅샷 커밋·푸시 + GitHub Pages 게시 + 저장소 오타명 수정
 **요청**
 - W-002 이후 미커밋분을 "싹 커밋·푸시"(폴더 정리는 후속). 이어서 `발표/키즐링 후속 이메일 자동화.html`을 git으로 웹 게시 가능한지 문의 → "깔끔 URL로 게시" 선택. 저장소명 오타(Hackerton→Hackathon) 수정 요청.
